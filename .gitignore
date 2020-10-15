@@ -1,0 +1,4 @@
+node_modules/
+
+back/public/images/
+back/config/dbconfig.js

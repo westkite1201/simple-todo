@@ -6,9 +6,9 @@ router.post('/deleteTodo', async (req, res) => {
   try {
     const data = {
       todoItemIndex: req.body.todoItemIndex,
-      todoIndex: req.body.todoIndex,
+      todoIndex: req.body.todoIndex
     };
-    console.log('data ', data);
+
     let rows = await TodoDao.deleteTodo(data);
     if (rows) {
       //온경우
@@ -28,9 +28,9 @@ router.post('/editTodo', async (req, res) => {
       todoIndex: req.body.todoIndex,
       title: req.body.title,
       descTodo: req.body.descTodo,
-      isDone: req.body.isDone,
+      isDone: req.body.isDone
     };
-    console.log('data ', data);
+
     let rows = await TodoDao.editTodo(data);
     if (rows) {
       //온경우
@@ -49,9 +49,8 @@ router.post('/addTodo', async (req, res) => {
       todoIndex: req.body.todoIndex,
       title: req.body.title,
       descTodo: req.body.descTodo,
-      isDone: req.body.isDone,
+      isDone: req.body.isDone
     };
-    console.log('data ', data);
     let rows = await TodoDao.addTodo(data);
     if (rows) {
       //온경우
@@ -67,7 +66,7 @@ router.post('/addTodo', async (req, res) => {
 router.post('/getTodo', async (req, res) => {
   try {
     const data = {
-      todoNum: req.body.todoNum,
+      todoNum: req.body.todoNum
     };
     let rows = await TodoDao.getTodo(data);
     if (rows) {

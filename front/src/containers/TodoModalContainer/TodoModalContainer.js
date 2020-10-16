@@ -49,9 +49,15 @@ export default function TodoModalContainer({ todoModalView, handleClose }) {
 
   useEffect(() => {
     console.log('editTodoItemIndex ', editTodoItemIndex, todosArr);
-    setTitle(isEdit ? todosArr.data[editTodoItemIndex].title : '');
-    setDescTodo(isEdit ? todosArr.data[editTodoItemIndex].descTodo : '');
-    setIsDone(isEdit ? todosArr.data[editTodoItemIndex].isDone : '');
+    //현재 수정하려하는 todo 찾기
+    if (todosArr.data && todosArr.data.length !== 0) {
+      let todo = todosArr.data.filter(
+        (item) => editTodoItemIndex === item.todoItemIndex
+      )[0];
+      setTitle(isEdit ? todo.title : '');
+      setDescTodo(isEdit ? todo.descTodo : '');
+      setIsDone(isEdit ? todo.isDone : false);
+    }
   }, [isEdit, editTodoItemIndex]);
 
   const addTodo = () => {

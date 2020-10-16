@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { withStyles } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
@@ -12,7 +12,6 @@ import {
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 function TodoItem({ todo, index }) {
   console.log(todo, index);
-  const [expand, setExpand] = useState(true);
 
   const dispatch = useDispatch();
 
@@ -20,7 +19,7 @@ function TodoItem({ todo, index }) {
     dispatch({
       type: TODO_MODAL_OPEN,
       payload: {
-        todoItemIndex: index,
+        todoItemIndex: todo.todoItemIndex,
         isEdit: true
       }
     });
@@ -29,7 +28,7 @@ function TodoItem({ todo, index }) {
     dispatch({
       type: DELETE_TODO_REQUEST,
       payload: {
-        todoItemIndex: index,
+        todoItemIndex: todo.todoItemIndex,
         todoIndex: 1
       }
     });
@@ -50,8 +49,7 @@ function TodoItem({ todo, index }) {
     },
     expanded: {}
   })(MuiExpansionPanel);
-  // const onToggle = useCallback(() => dispatch(toggleTodo(id)), [dispatch, id]);
-  // const onRemove = useCallback(() => dispatch(removeTodo(id)), [dispatch, id]);
+
   return (
     <TodoItemDiv>
       <div className={`todo todoItem${todo.isDone ? ' done' : ''}`}>

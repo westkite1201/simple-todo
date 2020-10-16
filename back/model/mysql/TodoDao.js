@@ -115,7 +115,6 @@ const addTodo = async (parameter) => {
       await connection.commit(); // COMMIT
       connection.release();
       console.log('success Query SELECT');
-      console.log('[SEO] todoRaw ', todoRaw);
       return todoRaw;
     } catch (err) {
       await connection.rollback(); // ROLLBACK
@@ -146,8 +145,7 @@ const getTodo = async (parameter) => {
       let [todoRaw] = await connection.query(getTodoQuery, [todoNum]);
       await connection.commit(); // COMMIT
       connection.release();
-      // console.log('success Query SELECT');
-      // console.log('[SEO] todoRaw ', todoRaw);
+      console.log('success Query SELECT');
       return todoRaw;
     } catch (err) {
       await connection.rollback(); // ROLLBACK

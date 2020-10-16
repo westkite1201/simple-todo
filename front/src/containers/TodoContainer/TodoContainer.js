@@ -4,17 +4,19 @@ import {
   GET_TODOS_REQUEST,
   TODO_MODAL_OPEN,
   TODO_MODAL_CLOSE
-} from '../modules/todos/reducer';
+} from '../../modules/todos/reducer';
 import styled from 'styled-components';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import TodoItem from '../components/Todo/TodoItem';
-import TodoModalContainer from './TodoModalContainer';
+import TodoItem from '../../components/Todo/TodoItem';
+import ProgressBar from '../../components/Common/ProgressBar';
+import TodoModalContainer from '../TodoModalContainer';
 import _ from 'lodash';
 import moment from 'moment';
-function TodoList() {
+function TodoContainer() {
   const { todosArr, todoModalView } = useSelector((state) => state.todos);
+  const [time, setTime] = useState(moment().format('MM월 DD일 HH시 mm분'));
   const dispatch = useDispatch();
-  console.log('todosArr ', todosArr);
+
   const { data, loading, error } = todosArr;
 
   const handleAddTodo = () => {
@@ -44,18 +46,29 @@ function TodoList() {
     });
   };
 
+  /* 시간  */
+  const tick = () => {
+    setTime(moment().format('MM월 DD일 HH시 mm분'));
+  };
+
   useEffect(() => {
     getTodo(1);
+    setInterval(tick, 1000);
   }, []);
 
+  const calcualteProgress = () => {
+    if (data && data.length !== 0) {
+      let todayTodoCount = data.length;
+      let todayTodoDoneCount = data.filter((item) => item.isDone === 1).length;
+      return (todayTodoDoneCount / todayTodoCount) * 100;
+    }
+  };
   return (
     <Fragment>
       <Div>
         <div className="todo-list-wrapper">
           <div className="todo-list-container">
-            <div className="todo-date-time">
-              {moment().format('MM월 DD일 HH시 mm분')}
-            </div>
+            <div className="todo-date-time">{time}</div>
             <hr />
             <div className="todo-list-content">
               {data &&
@@ -67,35 +80,24 @@ function TodoList() {
                   />
                 ))}
             </div>
-
             <AddCircleOutlineIcon
               style={{ cursor: 'pointer' }}
               onClick={handleAddTodo}
             />
-            <ProgressBar percent={30}>
-              <div className="todo-today-progress-wrapper">
-                <div className="todo-today-progress-inner"></div>
-              </div>
-            </ProgressBar>
           </div>
         </div>
+        <ProgressBar percent={calcualteProgress()} />
       </Div>
-      <TodoModalContainer
-        todoModalView={todoModalView}
-        handleClose={handleClose}
-      />
+      <div>
+        <TodoModalContainer
+          todoModalView={todoModalView}
+          handleClose={handleClose}
+        />
+      </div>
     </Fragment>
   );
 }
 
-const ProgressBar = styled.div`
-  .todo-today-progress {
-    .todo-today-progress-inner {
-      background-color: green;
-      width: ${(props) => props.percent}%;
-    }
-  }
-`;
 const Div = styled.div`
   margin-left: 20%;
   margin-right: 20%;
@@ -108,7 +110,6 @@ const Div = styled.div`
     background: white;
     border-radius: 16px;
     box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.4);
-    /* margin: 50px 50px 50px 50px; */
     margin-top: 30px;
     margin-bottom: 32px;
     padding: 20px;
@@ -117,6 +118,7 @@ const Div = styled.div`
     .todo-list-container {
       border-radius: 4px;
       text-align: center;
+      transition: width 2s;
 
       .todo-date-time {
         font-size: 2rem;
@@ -133,4 +135,4 @@ const Div = styled.div`
     }
   }
 `;
-export default TodoList;
+export default TodoContainer;

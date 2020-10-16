@@ -1,25 +1,16 @@
 import produce from 'immer';
 
 export const initialState = {
-  mainPosts: [], // 화면에 보일 포스트들
-  imagePaths: [], // 미리보기 이미지 경로
-  addPostErrorReason: '', // 포스트 업로드 실패 사유
-  isAddingPost: false, // 포스트 업로드 중
-  postAdded: false, // 포스트 업로드 성공
-  isAddingComment: false,
-  addCommentErrorReason: '',
-  commentAdded: false,
-  singlePost: null,
   todoModalView: false,
   todosArr: [
     {
       loading: false,
       data: [],
-      error: null,
-    },
+      error: null
+    }
   ],
   isEdit: false,
-  editTodoItemIndex: 0,
+  editTodoItemIndex: 0
 };
 
 export const GET_TODOS_REQUEST = 'todos/GET_TODOS_REQUEST';
@@ -48,9 +39,6 @@ export const ADD_POST_FAILURE = 'ADD_POST_FAILURE';
 export default (state = initialState, action) => {
   return produce(state, (draft) => {
     switch (action.type) {
-      case EDIT_TODO_REQUEST: {
-        break;
-      }
       case EDIT_TODO_SUCCESS: {
         draft.todosArr = action.payload;
         draft.todoModalView = false;
@@ -101,25 +89,6 @@ export default (state = initialState, action) => {
         break;
       }
       case DELETE_TODO_FAILURE: {
-        break;
-      }
-
-      case ADD_POST_REQUEST: {
-        draft.isAddingPost = true;
-        draft.addingPostErrorReason = '';
-        draft.postAdded = false;
-        break;
-      }
-      case ADD_POST_SUCCESS: {
-        draft.isAddingPost = false;
-        draft.mainPosts.unshift(action.data);
-        draft.postAdded = true;
-        draft.imagePaths = [];
-        break;
-      }
-      case ADD_POST_FAILURE: {
-        draft.isAddingPost = false;
-        draft.addPostErrorReason = action.error;
         break;
       }
       default: {

@@ -64,3 +64,18 @@ next를 눌러주세요.
 
 ![](https://images.velog.io/images/westkite/post/72f8f7ef-4856-470a-9004-79fdfea375b1/image.png)
 스키마 적용 완료. 
+
+```
+/*계정 추가*/
+INSERT INTO user(ID, PASSWORD, GB_CD, NAME) VALUES ('ADMIN','ADMIN',0,'ADMIN');
+/*계정 확인 */
+SELECT *
+FROM user;
+
+/*기본 TODO 추가 */
+INSERT INTO todo(USER_INDEX, TODO_TITLE) VALUES (1, 'TEST');
+/*TODO 확인 */
+SELECT *
+FROM todo;
+```
+기본 user와 todo를 등록해주세요.
